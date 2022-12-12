@@ -76,7 +76,7 @@ int main()
     for (int i = 0; i < 120; i++) {
         rst = av_read_frame(fmtCtx, packet);
         if (rst < 0) {
-            LOG_ERROR << "av_read_frame ERROR:" << av_err2str(rst);
+            LOG_ERROR << "av_read_frame ERROR:" << rst;
             continue;
         }
         if (packet->stream_index != video_stream_index) {
