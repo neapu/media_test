@@ -22,8 +22,13 @@ int main()
     av_dict_set(&options, "video_size", "640*480", 0);
     av_dict_set(&options, "framerate", "30", 0);
     av_dict_set(&options, "pixel_format", "yuyv422", 0);
+#ifdef OS_LINUX
+    auto inputFormat = av_find_input_format("linux4video2");
+    int rst = avformat_open_input(&fmtCtx, "/dev/video0", inputFormat, &options);
+#else
     auto inputFormat = av_find_input_format("avfoundation");
     int rst = avformat_open_input(&fmtCtx, "FaceTime HD Camera", inputFormat, &options);
+#endif
     if (rst != 0) {
         LOG_DEADLY << "avformat_open_input ERROR:" << rst;
         return -1;
